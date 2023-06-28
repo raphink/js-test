@@ -1,21 +1,53 @@
 <html>
   <head>
     <script>
-      function complete() {
-              const msg = {
-                      mark_finished: true,
-                      lesson_progress_score: 0,
-                      lesson_progress_max_score: 10,
-                      lesson_progress_success_status: 'PASSED'
-                    };
-              parent.postMessage(JSON.stringify(msg), "*");
 
-            }
+      // slides.com integration
+      window.addEventListener('message', function(event) {
+              if (event.origin !== "https://slides.com") {
+                      return;
+                    }
+
+              var data = JSON.parse(event.data);
+
+              if (data.namespace === 'reveal') {
+                      if (data.eventName === 'slidechanged' || data.eventName === 'ready') {
+                              var state = data.state;
+
+
+                              console.log('posting isLastSlide message to window', event.source);
+
+                              // Request isLastSlide method
+                              event.source.postMessage(JSON.stringify({
+                                      method: 'isLastSlide'
+                                    }), '*');
+                            }
+                      else if (data.eventName === 'callback') {
+                              console.log('received callback message with method', data.method);
+                              if (data.method === 'isLastSlide') {
+                                      console.log('result is', data.result);
+                                      var isLastSlide = data.result;
+                                      if (isLastSlide) {
+                                              console.log("Last slide reached!");
+                                              const msg = {
+                                                      mark_finished: true,
+                                                      lesson_progress_score: 0,
+                                                      lesson_progress_max_score: 10,
+                                                      lesson_progress_success_status: 'PASSED'
+                                                    };
+                                              parent.postMessage(JSON.stringify(msg), "*");
+
+                                            }
+                                    }
+                              else {
+                                      console.log('Callback from ', data.method, ' is ', data.result);
+                                    }
+                            }
+                    }
+            });
     </script>
   </head>
   <body>
-    <h1>Hello</h1>
-
-    <a href="javascript:complete()">Click here</a>
+    <iframe id='content' style='width:100%;height:100%;' src='https://slides.com/isoraphink/page-1/embed?postMessageEvents=true&style=light'></iframe>
   </body>
 </html>
