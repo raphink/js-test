@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <script>
+      function complete() {
+              const msg = {
+                      mark_finished: true,
+                      lesson_progress_score: 0,
+                      lesson_progress_max_score: 10,
+                      lesson_progress_success_status: 'PASSED'
+                    };
+              parent.postMessage(JSON.stringify(msg), "*");
+
+            }
+    </script>
+  </head>
+  <body>
+    <h1>Hello</h1>
+
+    <a href="javascript:complete()">Click here</a>
+  </body>
+</html>
