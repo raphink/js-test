@@ -4,6 +4,7 @@
       window.document.onload = function(e) {
               const urlParams = new URLSearchParams(window.location.search);
               const url = urlParams.get('url');
+              console.log(url);
               document.getElementById('content').setAttribute('src', url);
             }
 
