@@ -1,12 +1,12 @@
 <html>
   <head>
     <script>
-      window.document.onload = function(e) {
+      window.addEventListener("load", (event) => {
               const urlParams = new URLSearchParams(window.location.search);
               const url = urlParams.get('url');
               console.log(url);
               document.getElementById('content').setAttribute('src', url);
-            }
+            });
 
       // slides.com integration
       window.addEventListener('message', function(event) {
