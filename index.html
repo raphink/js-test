@@ -1,6 +1,11 @@
 <html>
   <head>
     <script>
+      window.document.onload = function(e) {
+              const urlParams = new URLSearchParams(window.location.search);
+              const url = urlParams.get('url');
+              document.getElementById('content').setAttribute('src', url);
+            }
 
       // slides.com integration
       window.addEventListener('message', function(event) {
@@ -48,6 +53,6 @@
     </script>
   </head>
   <body>
-    <iframe id='content' style='width:100%;height:100%;' src='https://slides.com/isoraphink/page-1/embed?postMessageEvents=true&style=light'></iframe>
+    <iframe id='content' style='width:100%;height:100%;' src=''></iframe>
   </body>
 </html>
